@@ -14,32 +14,33 @@ class Program
     {
         int nx = 200;
         int ny = 100;
+        int ns = 100;
         //此数组位于第一象限
         Color[] data = new Color[nx * ny];
-
-        Vector3 lower_left_corner = new Vector3(-2, -1, -1);
-        Vector3 horizontal = new Vector3(4, 0, 0);
-        Vector3 vertical = new Vector3(0, 2, 0);
-        Vector3 origin = Vector3.zero;
 
         HitableList world = new HitableList();
         world.AddSphere(new Sphere(new Vector3(0, 0, -1), 0.5f));
         world.AddSphere(new Sphere(new Vector3(0, -100.5f, -1), 100f));
 
+        Camera cam = new Camera();
+
         for (int j = ny - 1; j >= 0; j-- )
         {
             for (int i = 0; i < nx; ++i )
             {
-                float u = (float)i / (float)nx;
-                float v = (float)j / (float)ny;
 
-//                 byte alpha = 255;
-//                 byte r = (byte)((float)i / (float)nx * 255);
-//                 byte g = (byte)((float)j / (float)ny * 255);
-//                 byte b = (byte)(0.2 * 255);
-                Ray ray = new Ray(origin, lower_left_corner + u * horizontal + v * vertical);
-                //Color color = Color.FromArgb(255, r, g, b);
-                Color color = ColorLerp(ray, world);
+
+                Color color = Color.clear;
+
+                for(int s = 0; s < ns; s++)
+                {
+                    float u = (i + Common.Random.Range(0f, 1f)) / (float)nx;
+                    float v = (j + Common.Random.Range(0f, 1f)) / (float)ny;
+                    Ray ray = cam.GetRay(u, v);
+                    color += ColorLerp(ray, world);
+                }
+
+                color /= (float)ns;
 
                 int index = j * nx + i;
                 data[index] = color;

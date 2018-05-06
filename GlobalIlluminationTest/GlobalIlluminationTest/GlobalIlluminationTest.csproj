@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Intersection\HitableList.cs" />
+    <Compile Include="Other\Camera.cs" />
     <Compile Include="Other\Color.cs" />
     <Compile Include="Other\DrawHelper.cs" />
     <Compile Include="Intersection\Ray.cs" />
