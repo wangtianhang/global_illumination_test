@@ -30,17 +30,15 @@ namespace Common
             float closest = float.MaxValue;
             foreach(var iter in m_sphereList)
             {
-                float enter = 0;
-                if(iter.Raycast(ray, out enter))
+                //float enter = 0;
+                HitRecord hitRecordTmp = new HitRecord();
+                if (iter.Raycast(ray, 0, closest, out hitRecordTmp))
                 {
-                    if(enter < closest)
+                    //if (hitRecordTmp.m_t < closest)
                     {
                         hit = true;
-                        closest = enter;
-                        hitRecord.m_t = enter;
-                        hitRecord.m_point = ray.GetPoint(enter);
-                        hitRecord.m_normal = hitRecord.m_point - iter.center;
-                        hitRecord.m_normal.Normalize();
+                        closest = hitRecordTmp.m_t;
+                        hitRecord = hitRecordTmp;
                     }
                 }
             }

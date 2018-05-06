@@ -74,9 +74,9 @@ class Program
         HitRecord hitRecord = new HitRecord();
         if (world.Hit(ray, out hitRecord))
         {
-            return 0.5f * new Color(hitRecord.m_normal.x + 1f, hitRecord.m_normal.y + 1f, hitRecord.m_normal.z + 1f);
-            //Vector3 target = hitRecord.m_point + hitRecord.m_normal + RandomInUnitSphere();
-            //return 0.5f * GetColor(new Ray(hitRecord.m_point, target - hitRecord.m_point), world);
+            //return 0.5f * new Color(hitRecord.m_normal.x + 1f, hitRecord.m_normal.y + 1f, hitRecord.m_normal.z + 1f);
+            Vector3 target = hitRecord.m_point + hitRecord.m_normal + RandomInUnitSphere();
+            return 0.5f * GetColor(new Ray(hitRecord.m_point, target - hitRecord.m_point), world);
         }
         else
         {

@@ -27,9 +27,9 @@ namespace Common
             set { _radius = value; }
         }
 
-        public bool Raycast(Ray ray, out float enter)
+        public bool Raycast(Ray ray, float t_min, float t_max, out HitRecord hitRecord)
         {
-            Vector3 oc = ray.origin - _center;
+            /*Vector3 oc = ray.origin - _center;
             float a = Vector3.Dot(ray.direction, ray.direction);
             float b = 2.0f * Vector3.Dot(oc, ray.direction);
             float c = Vector3.Dot(oc, oc) - _radius * _radius;
@@ -63,7 +63,35 @@ namespace Common
             {
                 enter = -1;
                 return false;
+            }*/
+            hitRecord.m_t = -1;
+            hitRecord.m_point = Vector3.zero;
+            hitRecord.m_normal = Vector3.zero;
+            Vector3 oc = ray.origin - _center;
+            float a = Vector3.Dot(ray.direction, ray.direction);
+            float b = Vector3.Dot(oc, ray.direction);
+            float c = Vector3.Dot(oc, oc) - _radius * _radius;
+            float discriminant = b * b - a * c;
+            if(discriminant > 0)
+            {
+                float temp = (-b - Mathf.Sqrt(b * b - a * c)) / a;
+                if(temp < t_max && temp > t_min)
+                {
+                    hitRecord.m_t = temp;
+                    hitRecord.m_point = ray.GetPoint(temp);
+                    hitRecord.m_normal = (hitRecord.m_point - _center) / _radius;
+                    return true;
+                }
+                temp = (-b + Mathf.Sqrt(b * b - a * c)) / a;
+                if (temp < t_max && temp > t_min)
+                {
+                    hitRecord.m_t = temp;
+                    hitRecord.m_point = ray.GetPoint(temp);
+                    hitRecord.m_normal = (hitRecord.m_point - _center) / _radius;
+                    return true;
+                }
             }
+            return false;
         }
     }
 }
