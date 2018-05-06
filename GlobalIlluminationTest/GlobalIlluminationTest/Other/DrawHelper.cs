@@ -14,7 +14,7 @@ class DrawHelper
         return ret;
     }
 
-    public static void DrawData(string filePath, int width, int height, Color[] data, string des)
+    public static void DrawData(string filePath, int width, int height, Common.Color[] data, string des)
     {
         Bitmap bitmap = DrawData(width, height, data);
         using (Graphics g = Graphics.FromImage(bitmap))
@@ -32,7 +32,7 @@ class DrawHelper
         bitmap.Save(filePath);
     }
 
-    public static Bitmap DrawData(int width, int height, Color[] data)
+    public static Bitmap DrawData(int width, int height, Common.Color[] data)
     {
         Bitmap bitmap = new Bitmap(width, height);
 
@@ -41,7 +41,9 @@ class DrawHelper
             for (int i = 0; i < width; ++i)
             {
                 int index = j * width + i;
-                bitmap.SetPixel(i, height - j - 1, data[index]);
+                Common.Color color = data[index];
+                Color sysColor = Color.FromArgb((byte)(255 * color.a), (byte)(255 * color.r), (byte)(255 * color.g), (byte)(255 * color.b));
+                bitmap.SetPixel(i, height - j - 1, sysColor);
             }
         }
         return bitmap;

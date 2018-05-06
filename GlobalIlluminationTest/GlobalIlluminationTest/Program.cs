@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
+//using System.Drawing;
 using Common;
 
 /// <summary>
@@ -54,22 +54,25 @@ class Program
         float enter = 0;
         if(sphere.Raycast(ray, out enter))
         {
-            return Color.Red;
+            Vector3 hitPoint = ray.GetPoint(enter);
+            Vector3 normal = hitPoint - sphere.center;
+            return Color.red;
         }
 
-        Color src = Color.White;
-        Color des = Color.Blue;
+        //Color src = Color.white;
+        //Color des = Color.blue;
         
         float y = ray.direction.y;
         float weight = (y + 1) / 2;
         //float range = 1 - (-1);
         //float weight = -1 + offset * range;
 
-        int r = (int)((1 - weight) * src.R + weight * des.R);
-        int g = (int)((1 - weight) * src.G + weight * des.G);
-        int b = (int)((1 - weight) * src.B + weight * des.B);
+        //int r = (int)((1 - weight) * src.R + weight * des.R);
+        //int g = (int)((1 - weight) * src.G + weight * des.G);
+        //int b = (int)((1 - weight) * src.B + weight * des.B);
 
-        return Color.FromArgb(255, r, g, b);
+        //return Color.FromArgb(255, r, g, b);
+        return Color.Lerp(Color.white, Color.blue, weight);
     }
 }
 

@@ -43,7 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DrawHelper.cs" />
+    <Compile Include="Other\Color.cs" />
+    <Compile Include="Other\DrawHelper.cs" />
     <Compile Include="Intersection\Ray.cs" />
     <Compile Include="Intersection\Sphere.cs" />
     <Compile Include="Math\Mathf.cs" />
