@@ -44,6 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DrawHelper.cs" />
+    <Compile Include="Math\Mathf.cs" />
+    <Compile Include="Math\Matrix4x4.cs" />
+    <Compile Include="Math\Quaternion.cs" />
+    <Compile Include="Math\Random.cs" />
+    <Compile Include="Math\RotateHelper.cs" />
+    <Compile Include="Math\Vector2.cs" />
+    <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Math\Vector4.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
