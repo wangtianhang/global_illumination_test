@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DrawHelper.cs" />
     <Compile Include="Intersection\Ray.cs" />
+    <Compile Include="Intersection\Sphere.cs" />
     <Compile Include="Math\Mathf.cs" />
     <Compile Include="Math\Matrix4x4.cs" />
     <Compile Include="Math\Quaternion.cs" />

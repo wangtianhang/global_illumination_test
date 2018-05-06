@@ -50,6 +50,13 @@ class Program
 
     static Color ColorLerp(Ray ray)
     {
+        Sphere sphere = new Sphere(new Vector3(0, 0, -1), 0.5f);
+        float enter = 0;
+        if(sphere.Raycast(ray, out enter))
+        {
+            return Color.Red;
+        }
+
         Color src = Color.White;
         Color des = Color.Blue;
         
