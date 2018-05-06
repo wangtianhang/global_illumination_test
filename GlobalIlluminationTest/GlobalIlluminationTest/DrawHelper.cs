@@ -36,12 +36,12 @@ class DrawHelper
     {
         Bitmap bitmap = new Bitmap(width, height);
 
-        for (int j = 0; j < height; ++j)
+        for (int j = height - 1; j >= 0; --j)
         {
             for (int i = 0; i < width; ++i)
             {
-                int index = j * height + i;
-                bitmap.SetPixel(i, j, data[index]);
+                int index = j * width + i;
+                bitmap.SetPixel(i, height - j - 1, data[index]);
             }
         }
         return bitmap;
