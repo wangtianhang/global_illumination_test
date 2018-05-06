@@ -14,6 +14,7 @@ namespace Common
         {
             _origin = origin;
             _direction = direction;
+            _direction.Normalize();
         }
 
         public Vector3 origin 
