@@ -10,10 +10,12 @@ using Common;
 /// </summary>
 class Program
 {
+    static int m_maxStackDepth = 0;
+
     static void Main(string[] args)
     {
-        int nx = 200;
-        int ny = 100;
+        int nx = 1000;
+        int ny = 500;
         int ns = 100;
         //此数组位于第一象限
         Color[] data = new Color[nx * ny];
@@ -24,10 +26,21 @@ class Program
 
         Camera cam = new Camera();
 
+        int totalCount = nx * ny;
+        int curCount = 0;
+        int lastProgress = 0;
+
         for (int j = ny - 1; j >= 0; j-- )
         {
             for (int i = 0; i < nx; ++i )
             {
+                curCount += 1;
+                int progress = (int)(((float)curCount / totalCount) * 100);
+                if (progress > lastProgress)
+                {
+                    lastProgress = progress;
+                    Console.WriteLine("progress " + progress + "%");
+                }
 
                 Color color = Color.clear;
 
@@ -36,14 +49,17 @@ class Program
                     float u = (i + Common.Random.Range(0f, 1f)) / (float)nx;
                     float v = (j + Common.Random.Range(0f, 1f)) / (float)ny;
                     Ray ray = cam.GetRay(u, v);
-                    color += GetColor(ray, world);
+                    m_maxStackDepth = 0;
+                    Color tmpColor = GetColor(ray, world);
+                    color += tmpColor;
                 }
 
                 color /= (float)ns;
+                color.a = 1;
 
-                //color.r = Mathf.Sqrt(color.r);
-                //color.g = Mathf.Sqrt(color.g);
-                //color.b = Mathf.Sqrt(color.b);
+                color.r = Mathf.Sqrt(color.r);
+                color.g = Mathf.Sqrt(color.g);
+                color.b = Mathf.Sqrt(color.b);
 
                 int index = j * nx + i;
                 data[index] = color;
@@ -71,8 +87,9 @@ class Program
     {
         //Sphere sphere = new Sphere(new Vector3(0, 0, -1), 0.5f);
         //float enter = 0;
+        m_maxStackDepth += 1;
         HitRecord hitRecord = new HitRecord();
-        if (world.Hit(ray, out hitRecord))
+        if (m_maxStackDepth <= 5 && world.Hit(ray, out hitRecord))
         {
             //return 0.5f * new Color(hitRecord.m_normal.x + 1f, hitRecord.m_normal.y + 1f, hitRecord.m_normal.z + 1f);
             Vector3 target = hitRecord.m_point + hitRecord.m_normal + RandomInUnitSphere();
